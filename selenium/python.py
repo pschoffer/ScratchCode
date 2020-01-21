@@ -2,6 +2,7 @@
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 startURL = "https://speedcoding.toptal.com/challenge?ch=toptal-speedcoding"
@@ -9,13 +10,22 @@ startURL = "https://speedcoding.toptal.com/challenge?ch=toptal-speedcoding"
 currentQuestionNu = 1
 
 
-def getTextarea(number):
+def getQuestion():
     while True:
-        print("looking for ", number)
+        print("looking for Question")
         try:
-            questionField = driver.find_element_by_class_name("current-task-number")
+            return driver.find_element_by_class_name("ace_function").text
+        except:
+            pass
+        time.sleep(0.3)
 
-            if str(number) in questionField.text:
+
+def getTextarea(prevQuestion):
+    while True:
+        currentQuestion = getQuestion()
+        print("looking for new question, old:", prevQuestion, " new:", currentQuestion)
+        try:
+            if currentQuestion != prevQuestion:
                 textarea = driver.find_element_by_tag_name("textarea")
                 return textarea
         except:
@@ -23,23 +33,26 @@ def getTextarea(number):
         time.sleep(0.5)
 
 
-def getQuestion():
-    return driver.find_element_by_class_name("ace_function").text
-
-
 def confirm(textarea):
     while True:
         print("Waiting for gree checks")
         try:
             driver.find_element_by_class_name("text-success")
-            ActionChains(driver).key_down(Keys.CONTROL, textarea).perform()
-            ActionChains(driver).key_down(Keys.RETURN, textarea).perform()
+            ActionChains(driver).key_down(Keys.CONTROL, textarea).key_down(
+                Keys.RETURN, textarea
+            ).perform()
+            ActionChains(driver).key_up(Keys.CONTROL).key_up(Keys.RETURN).perform()
             return
-        except:
-            ActionChains(driver).key_down(Keys.CONTROL, textarea).perform()
-            ActionChains(driver).key_down(Keys.RETURN, textarea).perform()
-            ActionChains(driver).key_up(Keys.CONTROL, textarea).perform()
-            ActionChains(driver).key_up(Keys.RETURN, textarea).perform()
+        except NoSuchElementException:
+            # 'alert-danger'
+
+            ActionChains(driver).key_down(Keys.CONTROL, textarea).key_down(
+                Keys.RETURN, textarea
+            ).perform()
+            ActionChains(driver).key_up(Keys.CONTROL, textarea).key_up(
+                Keys.RETURN, textarea
+            ).perform()
+            time.sleep(0.2)
 
 
 # 43	Pavel Schoffer	425
@@ -84,9 +97,9 @@ driver.find_element_by_tag_name("button").click()
 
 print("Let's do this")
 
-textarea = getTextarea(currentQuestionNu)
+textarea = getTextarea("")
 question = getQuestion()
-currentQuestionNu = currentQuestionNu + 1
+
 print("Doing: ", question)
 while question in results:
     answer = results[question]
@@ -95,9 +108,8 @@ while question in results:
 
     confirm(textarea)
 
-    textarea = getTextarea(currentQuestionNu)
+    textarea = getTextarea(question)
     question = getQuestion()
-    currentQuestionNu = currentQuestionNu + 1
 
 print("Unknown!")
 
