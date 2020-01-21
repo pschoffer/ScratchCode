@@ -12,5 +12,5 @@ var (
 
 func main()  {
 	name := "Pavel"
-	fmt.Println("Hello from", name, reflect.TypeOf(course), module )
+	fmt.Println("Hello from", &name )
 }
