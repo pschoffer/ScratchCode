@@ -34,6 +34,7 @@ def getTextarea(prevQuestion):
 
 
 def confirm(textarea):
+    wentTillEnd = False
     while True:
         print("Waiting for gree checks")
         try:
@@ -44,7 +45,13 @@ def confirm(textarea):
             ActionChains(driver).key_up(Keys.CONTROL).key_up(Keys.RETURN).perform()
             return
         except NoSuchElementException:
-            # 'alert-danger'
+            try:
+                driver.find_element_by_class_name("alert-danger")
+                print("Something is not building - deleting")
+                driver.save_screenshot("screenshot.png")
+                exit
+            except:
+                pass
 
             ActionChains(driver).key_down(Keys.CONTROL, textarea).key_down(
                 Keys.RETURN, textarea
@@ -52,11 +59,12 @@ def confirm(textarea):
             ActionChains(driver).key_up(Keys.CONTROL, textarea).key_up(
                 Keys.RETURN, textarea
             ).perform()
-            time.sleep(0.2)
 
 
 # 43	Pavel Schoffer	425
-
+# 37	Pavel Schoffer	1175
+# 34	Pavel Schoffer	2295
+# 34	Pavel Schoffer	2311
 results = {
     "numberToString": 'return x + ""',
     "double": "return x*2",
@@ -79,8 +87,10 @@ results = {
     "monthFromUnixTimestamp": "return (new Date(x * 1000)).getMonth() + 1",
     "flatten": "return x.flat(Infinity)",
     "invertCase": "return x.split('').map(l => l.toUpperCase() === l ? l.toLowerCase() : l.toUpperCase()).join('')",
-    "sortingType": "function matches(a, b) {\nvar matchItems = a.map((aItem, ix) => aItem == b[ix])\nreturn !matchItems.includes(false)\n}\nvar sorted = x.concat().sort((a, b) => a < b ? -1 : 1)\nreturn matches(x, sorted) ? 1 : (matches(x.reverse(), sorted) ? -1 : 0)",
-    "isBalanced": "var parans = x.split('').filter(c => ['(', ')'].includes(c))\nvar open = 0\nvar broken = false\nparans.forEach(paran => {\nif (paran === '(') open++\nelse {\nbroken = broken || open < 1;\nopen--\n}});\nreturn !broken && open == 0",
+    "sortingType": "function matches(a, b) { var matchItems = a.map((aItem, ix) => aItem == b[ix]); return !matchItems.includes(false) }\nvar sorted = x.concat().sort((a, b) => a < b ? -1 : 1)\nreturn matches(x, sorted) ? 1 : (matches(x.reverse(), sorted) ? -1 : 0)",
+    "isBalanced": "var parans = x.split('').filter(c => ['(', ')'].includes(c))\nvar open = 0\nvar broken = false\nparans.forEach(paran => { if (paran === '(') open++; else {broken = broken || open < 1; open--;}});\nreturn !broken && open == 0",
+    "mostFrequentNumber": "var dict = {};\nx.forEach(e => e in dict ? dict[e].count++ : dict[e] = { count: 1, value: e });\nhighest = 0\nhighestOccurence = 0\nfor (k in dict) if (dict[k].count > highestOccurence) { highest = dict[k].value; highestOccurence = dict[k].count }\nreturn highest",
+    "hasBalancePoint": "if (x.length == 0) return true;\nvar sum = x.reduce((sum, el) => sum += el, 0)\nvar runningSum = 0\nfor (var el of x) { if (runningSum == sum - runningSum) { return true; } else runningSum += el; };\nreturn false",
 }
 
 
@@ -105,6 +115,8 @@ while question in results:
     answer = results[question]
     print("Answering: ", answer)
     textarea.send_keys(answer)
+    # textarea.send_keys(results["isBalanced"])
+    # textarea.send_keys(Keys.ARROW_LEFT)
 
     confirm(textarea)
 
@@ -112,4 +124,5 @@ while question in results:
     question = getQuestion()
 
 print("Unknown!")
+driver.save_screenshot("end.png")
 
