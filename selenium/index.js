@@ -1,25 +1,15 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
 
-const startURL =
-  'https://speedcoding.toptal.com/challenge?ch=toptal-speedcoding';
+function solution(x) {
+  if (x.length == 0) return true;
+  var sum = x.reduce((sum, el) => sum += el, 0)
+  var runningSum = 0
+  for (var el of x) { if (runningSum == sum - runningSum) { return true; } else runningSum += el; };
+  return false
+}
+// x is an array of numbers. return whether there is an index where the sum
+// before (excluding) it is equal to the sum after (including) it.
 
-chrome.setDefaultService(
-  new chrome.ServiceBuilder(
-    './node_modules/chromedriver/bin/chromedriver'
-  ).build()
-);
+x = [1, 1]
+result = solution(x)
 
-(async function example() {
-  console.log('Gonna start!');
-  try {
-    let driver = await new Builder().forBrowser('chrome').build();
-    await driver.get(startURL);
-    title = await driver.getTitle();
-    console.log('Filling form ' + title);
-  } catch (e) {
-    console.log('ERRORR', e);
-  } finally {
-    await driver.quit();
-  }
-})();
+console.log(result)
