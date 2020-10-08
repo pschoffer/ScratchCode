@@ -8,10 +8,24 @@ class Feature_Test extends TestCase {
 		require_once __DIR__ . '/../src/feature.php';
 	}
 
-    public function testShouldExecute()
-    {
-        $objectUnderTest = new Feature();
+    public function provideDataShouldExecute() {
+        return [
+            [9, true],
+            [1, false]
+        ];
+    }
 
-        $this->assertTrue($objectUnderTest->shouldExecute());
+    /**
+    * @dataProvider provideDataShouldExecute
+    */
+    public function testShouldExecute( $randomValue, $expectedResult)
+    {
+        $partialMock = $this->getMockBuilder( Feature::class )
+            ->setMethods( [ 'random' ] )
+            ->getMock();
+
+        $partialMock->method( 'random' )->willReturn( $randomValue );
+
+        $this->assertEquals( $expectedResult, $partialMock->shouldExecute() );
     }
 }
