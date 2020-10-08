@@ -20,12 +20,12 @@ class Feature_Test extends TestCase {
     */
     public function testShouldExecute( $randomValue, $expectedResult)
     {
-        $partialMock = $this->getMockBuilder( Feature::class )
-            ->setMethods( [ 'random' ] )
-            ->getMock();
+        $objectUnderTest = new Feature();
 
-        $partialMock->method( 'random' )->willReturn( $randomValue );
+        $objectUnderTest->dependency = $this->createMock( Dependency::class );
 
-        $this->assertEquals( $expectedResult, $partialMock->shouldExecute() );
+        $objectUnderTest->dependency->method( 'random' )->willReturn( $randomValue );
+
+        $this->assertEquals( $expectedResult, $objectUnderTest->shouldExecute() );
     }
 }

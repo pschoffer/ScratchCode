@@ -1,16 +1,23 @@
 <?php
 
+class Dependency {
+    public function random() {
+        return rand( 0, 10 );
+    }
+}
+
 class Feature {
+    function __construct() {
+        $this->dependency = new Dependency();
+    }
+
+    public $dependency;
 
     public function shouldExecute() {
-        if ( $this->random() > 5 ) {
+        if ( $this->dependency->random() > 5 ) {
             return true;
         }
         return false;
-    }
-
-    public function random() {
-        return rand( 0, 10 );
     }
 }
 
