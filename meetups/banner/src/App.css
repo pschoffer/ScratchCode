@@ -19,6 +19,10 @@ body,html, #root, .background {
   border-radius: 1rem;
 }
 
+.background {
+  background-size: cover;
+}
+
 .background h2 {
   font-size: 2.5rem;
 }
