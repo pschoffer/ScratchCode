@@ -7,12 +7,12 @@ function App() {
   return (
     <div className="background" style={{ backgroundImage: `url(${background})` }}>
       <div className="backdrop">
-        <h2>How Is It Built:</h2>
+        <h2>How to Build:</h2>
         <div className="border">
-          <img className="logo" src={logo} />
+          <h1>Fyne</h1>
+          <p>Graphic User Interface Library</p>
         </div>
       </div>
-      <img className="gitlab" src={gitlab} />
     </div>
   );
 }
