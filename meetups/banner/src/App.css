@@ -30,6 +30,14 @@ body,html, #root, .background {
 .background h2 {
   font-size: 2.5rem;
 }
+.background h3 {
+  font-size: 2rem;
+  padding-bottom: 0.2rem;
+  margin:0;
+}
 .background img {
-  height: 5rem;
+  height: 20rem;
+  border-radius: 2rem;
+  background: white;
+  padding: 2rem;
 }
