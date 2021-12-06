@@ -1,6 +1,11 @@
+:root{
+  --primary: #f7f7f7
+}
+
 body,html, #root, .background {
   height: 100vh;
   width: 100vw;
+  color: var(--primary)
 }
 
 .backdrop {
@@ -14,10 +19,9 @@ body,html, #root, .background {
 }
 
 .border {
-  background: #000000;
+  background: var(--primary);
   padding: 1rem 2rem;
   border-radius: 1rem;
-  color: aliceblue;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +41,7 @@ body,html, #root, .background {
 }
 .background img {
   height: 20rem;
-  border-radius: 2rem;
-  background: white;
-  padding: 2rem;
+  /* border-radius: 2rem; */
+  /* background: white; */
+  /* padding: 2rem; */
 }
