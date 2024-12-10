@@ -15,14 +15,13 @@
 
 - Startups \o/ Beaver.codes \o/
 
-    - Rectruitment tools, 
+    - Rectruitment tools 
     
     - JnF - PoS system
     
-    - Ticketing platfomr
+    - Ticketing platform
 
-
-
+    - ...
 
 
 
@@ -54,7 +53,6 @@
 
 
 
-
 ## Career and Job Board app
 
 - Merge Dev Hackathon - great to try blocks
@@ -64,6 +62,8 @@
 ### Idea for the app
 
 - Background in recruitment tools
+
+- Small businesses don't need ATS
 
 - 2 other apps 
 
@@ -106,8 +106,6 @@
 ## Questions
 
 - Now or reach anytime
-
-- schoffer.pavel@gmail.com
 
 - @Pavel on Wix discord
 
