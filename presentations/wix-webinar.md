@@ -93,9 +93,9 @@
 
     - Level of control
 
-    - Apply page - Flexbox
+    - Apply page - Lightbox
 
-    - Admin site
+    - Admin site - Dashboard page
 
 
 
